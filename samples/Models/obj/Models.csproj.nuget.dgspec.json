@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Models\\Models.csproj": {}
+    "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Models\\Models.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Models\\Models.csproj": {
+    "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Models\\Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Models\\Models.csproj",
+        "projectUniqueName": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Models\\Models.csproj",
         "projectName": "Models",
-        "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Models\\Models.csproj",
+        "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Models\\Models.csproj",
         "packagesPath": "C:\\Users\\tguo4\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Models\\obj\\",
+        "outputPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\tguo4\\AppData\\Roaming\\NuGet\\NuGet.Config",

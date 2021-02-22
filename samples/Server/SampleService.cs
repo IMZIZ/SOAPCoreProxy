@@ -30,13 +30,28 @@ namespace Server
 
 		}
 
-		public Task<GetCityStateByZipCodeResponse> GetCityStateByZipCodeRequest(string zipCode, string envId)
+		public Task<GetCityStateByZipCodeResponseSIOUT> GetCityStateByZipCodeRequest(string zipCode, string envId)
 		{
-			Task<GetCityStateByZipCodeResponse> response = _mhpClient.GetCityStateByZipCodeAsync(zipCode, envId);
+
+			//Get TrackingID 
+			Task<GetCityStateByZipCodeResponse> response = _mhpClient1.GetCityStateByZipCodeAsync(zipCode, envId);
+			//second method
+			Task<GetCityStateByZipCodeResponse> response = _mhpClient1.GetClaimDataAsync(zipCode, envId);
+			//third method
+			//.....
+			//Consolate results to finial Response class
+			//and Put TrackingID/status/results into finial Response class
 			return response;
 		}
 
-		 
 
-    }
+		public Task<GetCityStateByZipCodeResponse> GetCityStateByZipCodeRequest2EndPoint(string zipCode, string envId)
+		{
+			Task<GetCityStateByZipCodeResponse> response = _mhpClient2.GetCityStateByZipCodeAsync(zipCode, envId);
+			return response;
+		}
+
+
+
+	}
 }

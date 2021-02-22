@@ -9967,11 +9967,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Server\\Server.csproj",
+      "projectUniqueName": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Server\\Server.csproj",
       "projectName": "Server",
-      "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Server\\Server.csproj",
+      "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Server\\Server.csproj",
       "packagesPath": "C:\\Users\\tguo4\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Server\\obj\\",
+      "outputPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\tguo4\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9987,11 +9987,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Models\\Models.csproj": {
-              "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Models\\Models.csproj"
+            "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Models\\Models.csproj": {
+              "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Models\\Models.csproj"
             },
-            "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\src\\SoapCore\\SoapCore.csproj": {
-              "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\src\\SoapCore\\SoapCore.csproj"
+            "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\src\\SoapCore\\SoapCore.csproj": {
+              "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\src\\SoapCore\\SoapCore.csproj"
             }
           }
         }

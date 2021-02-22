@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SXIqLg5AIOZl5mXsq9zbbe8Eda1QEOuK5R/8fyIK6SqYaLUq8uEpKW9U1czDOAwyD4Jo8HggCEAK2ph+oIachA==",
+  "dgSpecHash": "KTRL1kcO8qig28jECvI7dAQTcHkOIIbRwLKDjFqFlldHDaLXMdi8mRMfS3W16csJgLUNhyBvVifg2ZGriqvVqg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Models\\Models.csproj",
+  "projectFilePath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Models\\Models.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tguo4\\.nuget\\packages\\microsoft.netcore.app\\2.1.0\\microsoft.netcore.app.2.1.0.nupkg.sha512",
     "C:\\Users\\tguo4\\.nuget\\packages\\microsoft.netcore.dotnetapphost\\2.1.0\\microsoft.netcore.dotnetapphost.2.1.0.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\src\\SoapCore\\SoapCore.csproj": {}
+    "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\src\\SoapCore\\SoapCore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\src\\SoapCore\\SoapCore.csproj": {
+    "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\src\\SoapCore\\SoapCore.csproj": {
       "version": "1.1.0.7",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\src\\SoapCore\\SoapCore.csproj",
+        "projectUniqueName": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\src\\SoapCore\\SoapCore.csproj",
         "projectName": "SoapCore",
-        "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\src\\SoapCore\\SoapCore.csproj",
+        "projectPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\src\\SoapCore\\SoapCore.csproj",
         "packagesPath": "C:\\Users\\tguo4\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\src\\SoapCore\\obj\\",
+        "outputPath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\src\\SoapCore\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "configFilePaths": [

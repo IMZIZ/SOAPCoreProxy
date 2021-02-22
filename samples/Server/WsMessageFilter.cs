@@ -32,6 +32,7 @@ namespace Server
 
 		public void OnRequestExecuting(Message message)
 		{
+			//TO-DO:Auditing whole message
 			WsAuthToken wsAuthToken;
 			try
 			{
@@ -66,8 +67,7 @@ namespace Server
 			WsAuthToken wsAuthToken = null;
 			for (var i = 0; i < message.Headers.Count; i++)
 			{
-				//if (message.Headers["SUBSCRIBERSYSTEM"].ToUpper() == "REQUESTORSYSTEM")
-				if (message.Headers.GetHeader<string>(i) == "REQUESTORSYSTEM")
+				if (message.Headers[i].Name.ToUpper() == "REQUESTORSYSTEM")				
 				{
 					using var reader = message.Headers.GetReaderAtHeader(i);
 					reader.Read();
@@ -99,6 +99,10 @@ namespace Server
 
 		public void OnResponseExecuting(Message message)
 		{
+
+			//Manipulate message extrack data which required to build header/footer from message body
+			//PUT INTO HEADER/footer
+			//Then Auditing before sending the message out
 			throw new NotImplementedException();
 		}
 	}

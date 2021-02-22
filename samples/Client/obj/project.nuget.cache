@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TbQvegYOkwAl9Q+AnMj+XbdhKFjE2g6Pv+LSbCCtht7zviDjpNd8xwKYmCn9JEkV/6+bgkMSb0GObgt0xNKNbw==",
+  "dgSpecHash": "wTvTdR8wYR2SNRajGA/Vm9Oj3dyYbX6hfLZ3FAxKXGtWAhZG9Fccj2OdhsC99Gub5rPul0tLXBZUd72uoNs7Xg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Client\\Client.csproj",
+  "projectFilePath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Client\\Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tguo4\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\tguo4\\.nuget\\packages\\system.private.servicemodel\\4.7.0\\system.private.servicemodel.4.7.0.nupkg.sha512",

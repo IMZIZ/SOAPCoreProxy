@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DJ7T9grPEiblnfWlk8/WJPDWMod9cExKnp2PKr0Xqg60TQSJ+JKwjerpWPeSHh2YKa7d/cxg2cMIrzutvbSa4g==",
+  "dgSpecHash": "JOHqR58Yuaw+xpik0kmWu3wdpHCRGMlsmMtXeOCx6QwfKeLEVJ5dBAVZrOSJ9K217hAKuYu564SEnH4TwzfR6w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\Sample-DEV\\SoapCore-develop\\samples\\Server\\Server.csproj",
+  "projectFilePath": "C:\\Users\\tguo4\\OneDrive - DXC Production\\Documents\\GitHub\\SoapCore-Proxy\\SOAPCoreProxy\\samples\\Server\\Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tguo4\\.nuget\\packages\\aspnetcore.healthchecks.ui\\3.0.0\\aspnetcore.healthchecks.ui.3.0.0.nupkg.sha512",
     "C:\\Users\\tguo4\\.nuget\\packages\\aspnetcore.healthchecks.ui.client\\3.0.0\\aspnetcore.healthchecks.ui.client.3.0.0.nupkg.sha512",
