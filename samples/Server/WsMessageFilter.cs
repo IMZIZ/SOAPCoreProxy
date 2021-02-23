@@ -32,6 +32,9 @@ namespace Server
 
 		public void OnRequestExecuting(Message message)
 		{
+			// ECT - 2021.02.23 - Temporary - Ignore Security Request for testing purposes.
+			return;
+
 			//TO-DO:Auditing whole message
 			WsAuthToken wsAuthToken;
 			try
@@ -103,7 +106,7 @@ namespace Server
 			//Manipulate message extrack data which required to build header/footer from message body
 			//PUT INTO HEADER/footer
 			//Then Auditing before sending the message out
-			throw new NotImplementedException();
+			Console.WriteLine("Manipulation here?");
 		}
 	}
 }
