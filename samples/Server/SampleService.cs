@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using MHPService;
-using PracticeService;
+using SecondaryService;
 using Server.Interfaces;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -18,7 +18,7 @@ namespace Server
 	{
 		 
 		private MHPServicesClient _mhpClient;
-		private PracticeServiceClient _practiceClient;
+		private AddServiceClient _addServiceClient;
 
 		public SampleService()
         {
@@ -26,7 +26,7 @@ namespace Server
 			IMessageInspector messageInspector = new SoapSecurityHeaderInspector();
 
 			_mhpClient = new MHPServicesClient();
-			_practiceClient = new PracticeServiceClient();
+			_addServiceClient = new AddServiceClient();
 			var requestInterceptor = new FilteringEndpointBehavior(messageInspector);
 			//_mhpClient.Endpoint.EndpointBehaviors.Add(requestInterceptor);
 
@@ -50,14 +50,14 @@ namespace Server
         {
 			CombinedSOAPResponse myCombinedResponse = new CombinedSOAPResponse();
 			myCombinedResponse.zipResponse = await _mhpClient.GetCityStateByZipCodeAsync(zipCode, envId);
-			myCombinedResponse.addResponse = await _practiceClient.SimpleAddAsync(number1, number2);
+			myCombinedResponse.addResponse = await _addServiceClient.SimpleAddAsync(number1, number2);
 
 			return myCombinedResponse;
 		}
 
         public Task<int> SimpleAdd(int number1, int number2)
 		{
-			Task<int> response = _practiceClient.SimpleAddAsync(number1, number2);
+			Task<int> response = _addServiceClient.SimpleAddAsync(number1, number2);
 			return response;
 		}
 

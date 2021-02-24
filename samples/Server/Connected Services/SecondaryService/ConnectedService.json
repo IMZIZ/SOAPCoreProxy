@@ -6,14 +6,14 @@
   },
   "ExtendedData": {
     "inputs": [
-      "http://localhost:59878/PracticeService.svc"
+      "http://localhost:59853/AddService.svc"
     ],
     "collectionTypes": [
       "System.Array",
       "System.Collections.Generic.Dictionary`2"
     ],
     "namespaceMappings": [
-      "*, PracticeService"
+      "*, SecondaryService"
     ],
     "references": [
       "C:\\Users\\ethens\\source\\repos\\IMZIZ\\SOAPCoreProxy\\samples\\Server\\bin\\Debug\\netcoreapp3.1\\Models.dll",
@@ -179,6 +179,7 @@
       "System.ServiceModel.Http, {System.ServiceModel.Http, 4.8.0}",
       "System.ServiceModel.NetTcp, {System.ServiceModel.NetTcp, 4.4.4}",
       "System.ServiceModel.Primitives, {System.ServiceModel.Primitives, 4.8.0}",
+      "System.ServiceModel.Security, {System.ServiceModel.Security, 4.4.4}",
       "System.Text.Encoding, {System.Text.Encoding, 4.3.0}",
       "System.Text.Encoding.Extensions, {System.Text.Encoding.Extensions, 4.3.0}",
       "System.Text.Encodings.Web, {System.Text.Encodings.Web, 4.5.0}",
