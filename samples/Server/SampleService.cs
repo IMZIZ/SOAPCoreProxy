@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using MHPService;
+using SecondaryService;
 using Server.Interfaces;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -17,41 +18,48 @@ namespace Server
 	{
 		 
 		private MHPServicesClient _mhpClient;
-		//private VUEServicesClient _vueClient;
+		private AddServiceClient _addServiceClient;
 
-		public void SampleSerice()
+		public SampleService()
         {
 			
 			IMessageInspector messageInspector = new SoapSecurityHeaderInspector();
 
 			_mhpClient = new MHPServicesClient();
+			_addServiceClient = new AddServiceClient();
 			var requestInterceptor = new FilteringEndpointBehavior(messageInspector);
-			_mhpClient.Endpoint.EndpointBehaviors.Add(requestInterceptor);
+			//_mhpClient.Endpoint.EndpointBehaviors.Add(requestInterceptor);
 
 		}
 
-		public Task<GetCityStateByZipCodeResponseSIOUT> GetCityStateByZipCodeRequest(string zipCode, string envId)
+		public Task<GetCityStateByZipCodeResponse> GetCityStateByZipCodeRequest(string zipCode, string envId)
 		{
 
 			//Get TrackingID 
-			Task<GetCityStateByZipCodeResponse> response = _mhpClient1.GetCityStateByZipCodeAsync(zipCode, envId);
+			Task<GetCityStateByZipCodeResponse> response = _mhpClient.GetCityStateByZipCodeAsync(zipCode, envId);
 			//second method
-			Task<GetCityStateByZipCodeResponse> response = _mhpClient1.GetClaimDataAsync(zipCode, envId);
+			// ...
 			//third method
-			//.....
-			//Consolate results to finial Response class
-			//and Put TrackingID/status/results into finial Response class
+			// ...
+			//Consolidate results to finial Response class
+			//and Put TrackingID/status/results into final Response class
 			return response;
 		}
 
+        public async Task<CombinedSOAPResponse> MultiCall(string zipCode, string envId, int number1, int number2)
+        {
+			CombinedSOAPResponse myCombinedResponse = new CombinedSOAPResponse();
+			myCombinedResponse.zipResponse = await _mhpClient.GetCityStateByZipCodeAsync(zipCode, envId);
+			myCombinedResponse.addResponse = await _addServiceClient.SimpleAddAsync(number1, number2);
 
-		public Task<GetCityStateByZipCodeResponse> GetCityStateByZipCodeRequest2EndPoint(string zipCode, string envId)
+			return myCombinedResponse;
+		}
+
+        public Task<int> SimpleAdd(int number1, int number2)
 		{
-			Task<GetCityStateByZipCodeResponse> response = _mhpClient2.GetCityStateByZipCodeAsync(zipCode, envId);
+			Task<int> response = _addServiceClient.SimpleAddAsync(number1, number2);
 			return response;
 		}
 
-
-
-	}
+    }
 }

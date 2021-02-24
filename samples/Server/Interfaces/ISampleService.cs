@@ -23,6 +23,15 @@ namespace Server.Interfaces
 		//[ServiceFilter(typeof(SOAPRequestActionFilter))]
 		Task<GetCityStateByZipCodeResponse> GetCityStateByZipCodeRequest(string zipCode, string envId);
 
-	
+		[OperationContract]
+		[XmlSerializerFormat(SupportFaults = true)]
+		//[ServiceFilter(typeof(SOAPRequestActionFilter))]
+		Task<int> SimpleAdd(int number1, int number2);
+
+		[OperationContract]
+		[XmlSerializerFormat(SupportFaults = true)]
+		//[ServiceFilter(typeof(SOAPRequestActionFilter))]
+		Task<CombinedSOAPResponse> MultiCall(string zipCode, string envId, int number1, int number2);
+
 	}
 }

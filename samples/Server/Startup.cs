@@ -25,6 +25,8 @@ namespace Server
 
 			services.TryAddSingleton<ISampleService, SampleService>();
 			services.AddSoapMessageInspector(new SoapSecurityHeaderInspector());
+			// This one performs output logging
+			services.AddSoapMessageInspector(new MessageBroadcaster());
 			services.AddSoapMessageFilter(new WsMessageFilter("SI", "PI"));
 			services.AddSoapServiceOperationTuner(new MyServiceOperationTuner());
 			//services.AddSingleton<IFaultExceptionTransformer, DefaultFaultExceptionTransformer>();
