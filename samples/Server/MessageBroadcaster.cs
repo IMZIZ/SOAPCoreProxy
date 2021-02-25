@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Text;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace Server
 {
     public class MessageBroadcaster : SoapCore.Extensibility.IMessageInspector2
     {
 
-        int transactionID = 0;
+        string transactionID = string.Empty;
 
         public MessageBroadcaster()
         {
@@ -35,30 +36,31 @@ namespace Server
         }
 
         public object AfterReceiveRequest(ref Message message, ServiceDescription serviceDescription)
-        {
+        {   
             // Temporary - to see if we can keep the same transaction ID across transaction requests and replies
-            transactionID++;
+            //transactionID++;
+
             // This currently shows a number of ways to display the message details. Over time, we will narrow to the one we intend to use.
 
             // This section is not yet tested. It should allow us to see headers when present
             Console.WriteLine($"Total Headers found: {message.Headers.Count }");
 
-            for (int currentHeader = 0; currentHeader < message.Headers.Count; currentHeader++)
+            // This could process messages not used in the security token
+            
+            for (var i = 0; i < message.Headers.Count; i++)
             {
-
-                using (XmlDictionaryReader headerReader = message.Headers.GetReaderAtHeader(currentHeader))
+                Console.WriteLine(message.Headers[i].Name);
+                if (message.Headers[i].Name.ToUpper() == "TRANSACTIONID")
                 {
-                    headerReader.MoveToStartElement();
-                    while (!headerReader.EOF)
-                    {
-                        //string xmlContent = headerReader.ReadContentAsString();
-                        string myString = headerReader.ReadElementContentAsString();
-                        Console.WriteLine($"Value for header {currentHeader}: ");
-                        Console.WriteLine(myString);
-                        //Console.WriteLine($"Content was {xmlContent}");
-                    }
+                    Console.WriteLine("Reading transactionID  details.");
+                    using var reader = message.Headers.GetReaderAtHeader(i);
+                    reader.Read();
+                    //var serializer = new XmlSerializer(typeof(string));
+                    //wsAuthToken.Subscriber = (string)serializer.Deserialize(reader);
+                    transactionID = message.Headers.GetHeader<string>(i);
                 }
             }
+
 
             // A generic look at the messsage headers
             string myHeader = message.Headers.ToString();
@@ -68,9 +70,12 @@ namespace Server
             string bodyString = message.ToString();
             Console.WriteLine($"Message to string: {bodyString}");
 
-            // For today, this uses a random file name dor uniqueness. 
-            // In the future, a transaction ID obtained from the header will be used to ensure a unique file name.
-            string myFile = ".\\Requests\\IN_" + transactionID.ToString("####0");
+            // If the request header has come in blank for transactionID, get a random file name
+            if (transactionID == string.Empty)
+                transactionID = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+            
+            // Set up the log file name
+            string myFile = $".\\Requests\\ {transactionID}_IN";
             MessageToFile(ref message, myFile);
 
             Console.WriteLine("Request: Header logging is complete.");
@@ -108,7 +113,7 @@ namespace Server
 
             //For today, using a sequential counter that is incremented on each incoming request. This will re-set on each server start.
             // In the future, a transaction ID obtained from the header will be used to ensure a unique file name.
-            string myFile = ".\\Requests\\OUT_" + transactionID.ToString("####0");
+            string myFile = $".\\Requests\\ {transactionID}_OUT";
 
             // Create headers for any details that need to be in the reply.
             List<MessageHeader> headerDetails = new List<MessageHeader>();
