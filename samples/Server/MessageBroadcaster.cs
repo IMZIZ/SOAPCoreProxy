@@ -13,7 +13,7 @@ namespace Server
 {
     public class MessageBroadcaster : SoapCore.Extensibility.IMessageInspector2
     {
-
+        private Dictionary<string, string> Headerblock;
         string transactionID = string.Empty;
 
         public MessageBroadcaster()
@@ -36,7 +36,10 @@ namespace Server
         }
 
         public object AfterReceiveRequest(ref Message message, ServiceDescription serviceDescription)
-        {   
+        {
+            //Re-set for each incoming request
+            transactionID = string.Empty;
+
             // Temporary - to see if we can keep the same transaction ID across transaction requests and replies
             //transactionID++;
 
@@ -46,18 +49,25 @@ namespace Server
             Console.WriteLine($"Total Headers found: {message.Headers.Count }");
 
             // This could process messages not used in the security token
-            
+            if (message.Headers.Count > 0)
+            {
+                Headerblock = new Dictionary<string, string>();
+            }
+
             for (var i = 0; i < message.Headers.Count; i++)
             {
-                Console.WriteLine(message.Headers[i].Name);
-                if (message.Headers[i].Name.ToUpper() == "TRANSACTIONID")
+                string key = message.Headers[i].Name.ToUpper();
+                string value = message.Headers.GetHeader<string>(i);
+                Headerblock.Add(key, value);
+                Console.WriteLine(key);
+                if (key == "TRANSACTIONID")
                 {
-                    Console.WriteLine("Reading transactionID  details.");
+                    Console.WriteLine($"Reading {value} details.");
                     using var reader = message.Headers.GetReaderAtHeader(i);
                     reader.Read();
                     //var serializer = new XmlSerializer(typeof(string));
                     //wsAuthToken.Subscriber = (string)serializer.Deserialize(reader);
-                    transactionID = message.Headers.GetHeader<string>(i);
+                    transactionID = value;
                 }
             }
 
@@ -72,8 +82,19 @@ namespace Server
 
             // If the request header has come in blank for transactionID, get a random file name
             if (transactionID == string.Empty)
+            {
                 transactionID = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
-            
+                if (Headerblock.ContainsKey("TRANSACTIONID"))
+                {
+                    Headerblock["TRANSACTIONID"] = transactionID;
+                }
+                else
+                {
+                    Headerblock.Add("TRANSACTIONID", transactionID);
+                }
+            }
+
+
             // Set up the log file name
             string myFile = $".\\Requests\\ {transactionID}_IN";
             MessageToFile(ref message, myFile);
@@ -110,17 +131,24 @@ namespace Server
 
         public void BeforeSendReply(ref Message reply, ServiceDescription serviceDescription, object correlationState)
         {
+            string headerNamespace = string.Empty;
 
             //For today, using a sequential counter that is incremented on each incoming request. This will re-set on each server start.
             // In the future, a transaction ID obtained from the header will be used to ensure a unique file name.
             string myFile = $".\\Requests\\ {transactionID}_OUT";
 
+
             // Create headers for any details that need to be in the reply.
             List<MessageHeader> headerDetails = new List<MessageHeader>();
-            headerDetails.Add(MessageHeader.CreateHeader("transactionId", "namespace", transactionID));
-            headerDetails.Add(MessageHeader.CreateHeader("transactionDate", "namespace", DateTime.Now.ToShortDateString()));
+            foreach (KeyValuePair<string, string> headerEntry in Headerblock)
+            {
+                headerDetails.Add(MessageHeader.CreateHeader(headerEntry.Key, headerNamespace, headerEntry.Value));
+            }
             
-            // Add them to the outgoing SOAP reply.
+            // And add the date, just because.
+            headerDetails.Add(MessageHeader.CreateHeader("TRANSACTIONDATE", headerNamespace, DateTime.Now.ToShortDateString()));
+            
+            // Place them in the outgoing SOAP reply message.
             foreach (MessageHeader thisHeader in headerDetails)
             {
                 reply.Headers.Add(thisHeader);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.ServiceModel.Channels;
@@ -87,11 +88,15 @@ namespace Server
 					//wsAuthToken.Subscriber = (string)serializer.Deserialize(reader);
 					wsAuthToken.Subscriber = message.Headers.GetHeader<string>(i);
 				}
-
-				//wsAuthToken.Requestor = "SI";
-				//wsAuthToken.Subscriber = "PI";
-				wsAuthToken.RequestTime = System.Xml.XmlDateTimeSerializationMode.Local;
 			}
+
+			// Temporary: bypass by hard-coding valid values
+			if (wsAuthToken == null)
+			{
+				wsAuthToken.Requestor = "SI";
+				wsAuthToken.Subscriber = "PI";
+			}
+			//wsAuthToken.RequestTime = System.Xml.XmlDateTimeSerializationMode.Local;
 
 			if (wsAuthToken == null)
 			{
@@ -113,6 +118,7 @@ namespace Server
 			//PUT INTO HEADER/footer
 			//Then Auditing before sending the message out
 			Console.WriteLine("Manipulation here?");
+
 		}
 	}
 }
