@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.ServiceModel.Channels;
@@ -32,9 +33,6 @@ namespace Server
 
 		public void OnRequestExecuting(Message message)
 		{
-			// ECT - 2021.02.23 - Temporary - Ignore Security Request for testing purposes.
-			return;
-
 			//TO-DO:Auditing whole message
 			WsAuthToken wsAuthToken;
 			try
@@ -67,25 +65,38 @@ namespace Server
 
 		private WsAuthToken GetWsAuthToken(Message message)
 		{
-			WsAuthToken wsAuthToken = null;
+			WsAuthToken wsAuthToken = new WsAuthToken();
 			for (var i = 0; i < message.Headers.Count; i++)
 			{
+				Console.WriteLine($" **********************************************************");
+				Console.WriteLine($" *** Found Header: {message.Headers[i].Name.ToUpper()} ");
+				Console.WriteLine($" **********************************************************");
 				if (message.Headers[i].Name.ToUpper() == "REQUESTORSYSTEM")				
 				{
 					using var reader = message.Headers.GetReaderAtHeader(i);
 					reader.Read();
-					var serializer = new XmlSerializer(typeof(string));
-					wsAuthToken.Requestor = (string)serializer.Deserialize(reader);
+					//var serializer = new XmlSerializer(typeof(string));
+					//wsAuthToken.Requestor = (string)serializer.Deserialize(reader);
+					wsAuthToken.Requestor  = message.Headers.GetHeader<string>(i);
 				}
 
 				if (message.Headers[i].Name.ToUpper() == "SUBSCRIBERSYSTEM")
 				{
 					using var reader = message.Headers.GetReaderAtHeader(i);
 					reader.Read();
-					var serializer = new XmlSerializer(typeof(string));
-					wsAuthToken.Subscriber = (string)serializer.Deserialize(reader);
+					//var serializer = new XmlSerializer(typeof(string));
+					//wsAuthToken.Subscriber = (string)serializer.Deserialize(reader);
+					wsAuthToken.Subscriber = message.Headers.GetHeader<string>(i);
 				}
 			}
+
+			// Temporary: bypass by hard-coding valid values
+			if (wsAuthToken == null)
+			{
+				wsAuthToken.Requestor = "SI";
+				wsAuthToken.Subscriber = "PI";
+			}
+			//wsAuthToken.RequestTime = System.Xml.XmlDateTimeSerializationMode.Local;
 
 			if (wsAuthToken == null)
 			{
@@ -93,7 +104,7 @@ namespace Server
 			}
 			else
 			{
-				Console.WriteLine("Request message header" + wsAuthToken.Requestor);
+				Console.WriteLine("Request message header: " + wsAuthToken.Requestor);
 			}
 
 
@@ -107,6 +118,7 @@ namespace Server
 			//PUT INTO HEADER/footer
 			//Then Auditing before sending the message out
 			Console.WriteLine("Manipulation here?");
+
 		}
 	}
 }

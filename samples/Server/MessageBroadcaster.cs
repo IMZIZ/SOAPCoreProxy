@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Text;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace Server
 {
     public class MessageBroadcaster : SoapCore.Extensibility.IMessageInspector2
     {
-
-        int transactionID = 0;
+        private Dictionary<string, string> Headerblock;
+        string transactionID = string.Empty;
 
         public MessageBroadcaster()
         {
@@ -36,29 +37,40 @@ namespace Server
 
         public object AfterReceiveRequest(ref Message message, ServiceDescription serviceDescription)
         {
+            //Re-set for each incoming request
+            transactionID = string.Empty;
+
             // Temporary - to see if we can keep the same transaction ID across transaction requests and replies
-            transactionID++;
+            //transactionID++;
+
             // This currently shows a number of ways to display the message details. Over time, we will narrow to the one we intend to use.
 
             // This section is not yet tested. It should allow us to see headers when present
             Console.WriteLine($"Total Headers found: {message.Headers.Count }");
 
-            for (int currentHeader = 0; currentHeader < message.Headers.Count; currentHeader++)
+            // This could process messages not used in the security token
+            if (message.Headers.Count > 0)
             {
+                Headerblock = new Dictionary<string, string>();
+            }
 
-                using (XmlDictionaryReader headerReader = message.Headers.GetReaderAtHeader(currentHeader))
+            for (var i = 0; i < message.Headers.Count; i++)
+            {
+                string key = message.Headers[i].Name.ToUpper();
+                string value = message.Headers.GetHeader<string>(i);
+                Headerblock.Add(key, value);
+                Console.WriteLine(key);
+                if (key == "TRANSACTIONID")
                 {
-                    headerReader.MoveToStartElement();
-                    while (!headerReader.EOF)
-                    {
-                        //string xmlContent = headerReader.ReadContentAsString();
-                        string myString = headerReader.ReadElementContentAsString();
-                        Console.WriteLine($"Value for header {currentHeader}: ");
-                        Console.WriteLine(myString);
-                        //Console.WriteLine($"Content was {xmlContent}");
-                    }
+                    Console.WriteLine($"Reading {value} details.");
+                    using var reader = message.Headers.GetReaderAtHeader(i);
+                    reader.Read();
+                    //var serializer = new XmlSerializer(typeof(string));
+                    //wsAuthToken.Subscriber = (string)serializer.Deserialize(reader);
+                    transactionID = value;
                 }
             }
+
 
             // A generic look at the messsage headers
             string myHeader = message.Headers.ToString();
@@ -68,9 +80,23 @@ namespace Server
             string bodyString = message.ToString();
             Console.WriteLine($"Message to string: {bodyString}");
 
-            // For today, this uses a random file name dor uniqueness. 
-            // In the future, a transaction ID obtained from the header will be used to ensure a unique file name.
-            string myFile = ".\\Requests\\IN_" + transactionID.ToString("####0");
+            // If the request header has come in blank for transactionID, get a random file name
+            if (transactionID == string.Empty)
+            {
+                transactionID = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+                if (Headerblock.ContainsKey("TRANSACTIONID"))
+                {
+                    Headerblock["TRANSACTIONID"] = transactionID;
+                }
+                else
+                {
+                    Headerblock.Add("TRANSACTIONID", transactionID);
+                }
+            }
+
+
+            // Set up the log file name
+            string myFile = $".\\Requests\\ {transactionID}_IN";
             MessageToFile(ref message, myFile);
 
             Console.WriteLine("Request: Header logging is complete.");
@@ -105,17 +131,24 @@ namespace Server
 
         public void BeforeSendReply(ref Message reply, ServiceDescription serviceDescription, object correlationState)
         {
+            string headerNamespace = string.Empty;
 
             //For today, using a sequential counter that is incremented on each incoming request. This will re-set on each server start.
             // In the future, a transaction ID obtained from the header will be used to ensure a unique file name.
-            string myFile = ".\\Requests\\OUT_" + transactionID.ToString("####0");
+            string myFile = $".\\Requests\\ {transactionID}_OUT";
+
 
             // Create headers for any details that need to be in the reply.
             List<MessageHeader> headerDetails = new List<MessageHeader>();
-            headerDetails.Add(MessageHeader.CreateHeader("transactionId", "namespace", transactionID));
-            headerDetails.Add(MessageHeader.CreateHeader("transactionDate", "namespace", DateTime.Now.ToShortDateString()));
+            foreach (KeyValuePair<string, string> headerEntry in Headerblock)
+            {
+                headerDetails.Add(MessageHeader.CreateHeader(headerEntry.Key, headerNamespace, headerEntry.Value));
+            }
             
-            // Add them to the outgoing SOAP reply.
+            // And add the date, just because.
+            headerDetails.Add(MessageHeader.CreateHeader("TRANSACTIONDATE", headerNamespace, DateTime.Now.ToShortDateString()));
+            
+            // Place them in the outgoing SOAP reply message.
             foreach (MessageHeader thisHeader in headerDetails)
             {
                 reply.Headers.Add(thisHeader);
